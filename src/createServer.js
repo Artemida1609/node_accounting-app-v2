@@ -120,6 +120,8 @@ function createServer() {
     };
 
     expenses.push(expense);
+
+    return res.status(201).json(expense);
   });
 
   app.get('/expenses/:id', (req, res) => {
