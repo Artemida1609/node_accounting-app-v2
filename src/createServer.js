@@ -106,7 +106,7 @@ function createServer() {
     const user = users.find((u) => u.id === req.body.userId);
 
     if (!user) {
-      return res.status(404).send('User not found');
+      return res.status(400).send('User not found');
     }
 
     const expense = {
