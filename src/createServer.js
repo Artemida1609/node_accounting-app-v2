@@ -94,14 +94,19 @@ function createServer() {
   });
 
   app.post('/expenses', (req, res) => {
-    if (!req.body.userId) {
-      return res.status(400).send('User ID is required');
+    if (
+      !req.body.userId ||
+      !req.body.spentAt ||
+      !req.body.title ||
+      !req.body.amount
+    ) {
+      return res.status(400).send('All fields are required');
     }
 
     const user = users.find((u) => u.id === req.body.userId);
 
     if (!user) {
-      return res.status(400).send('User not found');
+      return res.status(404).send('User not found');
     }
 
     const expense = {
@@ -115,7 +120,6 @@ function createServer() {
     };
 
     expenses.push(expense);
-    res.status(201).json(expense);
   });
 
   app.get('/expenses/:id', (req, res) => {
